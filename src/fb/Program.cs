@@ -15,6 +15,9 @@ namespace fb {
 
 			[Option(Required = true, HelpText = "Regular expression to run on each line of every file" )]
 			public string Pattern { get; set; }
+
+			[Option('i', "case-insensitive", HelpText = "Regular expression search is case insensitive", Default = false)]
+			public bool IsCaseInsensitivePattern { get; set; }
 		}
 
 		[Verb("gen-path-tree")]
@@ -27,7 +30,8 @@ namespace fb {
 					(GrepOptions opts) => Grep.Run(
 						bucketsPath: opts.BucketPath,
 						filenamePattern: opts.FilenamePattern,
-						pattern: opts.Pattern
+						pattern: opts.Pattern,
+						isCaseInsensitivePattern: opts.IsCaseInsensitivePattern
 					),
 					(GenPathTree opts ) => 0,
 					notParsedFunc: errs => 1

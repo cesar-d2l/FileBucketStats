@@ -26,12 +26,17 @@ namespace fb.grep {
 		public static int Run(
 			string bucketsPath,
 			string filenamePattern,
-			string pattern
+			string pattern,
+			bool isCaseInsensitivePattern
 		) {
+			var patternRegexOptions = RegexOptions.Compiled;
+			if ( isCaseInsensitivePattern ) {
+				patternRegexOptions |= RegexOptions.IgnoreCase;
+			}
 			Run(
 				bucketsPath.Replace( '\\', '/'),
 				filenamePattern: new Regex( filenamePattern, RegexOptions.Compiled ),
-				pattern: new Regex( pattern, RegexOptions.Compiled )
+				pattern: new Regex( pattern, patternRegexOptions )
 			);
 
 			return 0;
